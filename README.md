@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spicy Hotel — Indian Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1b120d;
+    --bg-panel:#241811;
+    --bg-panel-2:#2c1d13;
+    --line: rgba(243,233,218,0.14);
+    --cream:#f3e9da;
+    --cream-dim: rgba(243,233,218,0.62);
+    --chili:#d3401a;
+    --chili-bright:#ef5a2c;
+    --gold:#e3a438;
+    --olive:#7c8a56;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.55;
+  }
+  h1,h2,h3,.serif{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(27,18,13,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    max-width:1180px;margin:0 auto;padding:16px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .mark{
+    width:34px;height:34px;border-radius:50%;
+    background:conic-gradient(from 220deg, var(--chili), var(--gold), var(--chili));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:700;color:#1b120d;font-size:16px;
+  }
+  .brand-name{font-family:'Fraunces',serif;font-size:20px;font-weight:600;letter-spacing:0.01em;}
+  .brand-name span{color:var(--chili-bright);}
+  nav.links{display:flex;gap:28px;font-size:14.5px;}
+  nav.links a{text-decoration:none;color:var(--cream-dim);transition:color .2s;}
+  nav.links a:hover{color:var(--cream);}
+  .nav-right{display:flex;align-items:center;gap:16px;}
+  .cart-btn{
+    position:relative;background:transparent;border:1px solid var(--line);
+    color:var(--cream);padding:9px 16px;border-radius:100px;font-size:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .cart-btn:hover{border-color:var(--chili-bright);}
+  .cart-count{
+    background:var(--chili-bright);color:#1b120d;font-weight:700;font-size:11.5px;
+    border-radius:50%;width:19px;height:19px;display:flex;align-items:center;justify-content:center;
+  }
+  .menu-toggle{
+    display:none;background:transparent;border:1px solid var(--line);border-radius:8px;
+    width:38px;height:38px;align-items:center;justify-content:center;flex-direction:column;gap:4px;
+  }
+  .menu-toggle span{width:16px;height:2px;background:var(--cream);display:block;transition:transform .2s, opacity .2s;}
+  .menu-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .menu-toggle.open span:nth-child(2){opacity:0;}
+  .menu-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+  .mobile-panel{
+    display:none;
+    max-height:0;overflow:hidden;
+    background:var(--bg-panel);border-top:1px solid var(--line);
+    transition:max-height .3s ease;
+  }
+  .mobile-panel.open{max-height:320px;}
+  .mobile-panel a{
+    display:block;padding:16px 28px;font-size:15px;color:var(--cream-dim);
+    text-decoration:none;border-bottom:1px solid var(--line);
+  }
+  .mobile-panel a:hover{color:var(--cream);}
+  @media (max-width:820px){
+    nav.links{display:none;}
+    .menu-toggle{display:flex;}
+    .mobile-panel{display:block;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    margin-top:0;
+    min-height:92vh;
+    display:flex;align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:saturate(1.08) brightness(0.6);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(20,13,9,0.35) 0%, rgba(17,11,8,0.55) 55%, rgba(15,10,7,0.96) 100%);
+  }
+  .hero-content{
+    position:relative;z-index:2;padding:0 28px 84px;max-width:1180px;margin:0 auto;width:100%;
+  }
+  .eyebrow-plain{color:var(--gold);font-size:14.5px;font-weight:600;margin-bottom:18px;}
+  .hero h1{
+    font-size:clamp(48px, 8vw, 96px);
+    line-height:0.96;
+    max-width:820px;
+    color:var(--cream);
+  }
+  .hero p.lede{
+    max-width:520px;margin-top:22px;font-size:18px;color:var(--cream-dim);
+  }
+  .hero-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn{
+    padding:14px 26px;border-radius:100px;font-size:14.5px;font-weight:600;
+    border:1px solid transparent;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+    transition:transform .15s ease, background .2s;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:var(--chili-bright);color:#1b0d07;}
+  .btn-primary:hover{background:#ff6a37;}
+  .btn-ghost{border-color:rgba(243,233,218,0.4);color:var(--cream);background:transparent;}
+  .btn-ghost:hover{border-color:var(--cream);}
+
+  /* ---------- section shell ---------- */
+  section{padding:100px 0;}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+    margin-bottom:56px;border-bottom:1px solid var(--line);padding-bottom:28px;
+  }
+  .section-head h2{font-size:clamp(32px,4vw,46px);}
+  .section-head p{color:var(--cream-dim);max-width:360px;font-size:15px;margin-top:8px;}
+
+  /* ---------- about strip ---------- */
+  .about{background:var(--bg-panel);}
+  .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;}
+  .about h2{font-size:clamp(30px,4vw,44px);line-height:1.08;}
+  .about p{color:var(--cream-dim);margin-top:20px;font-size:16px;max-width:460px;}
+  .hours{margin-top:28px;font-size:14.5px;color:var(--cream-dim);}
+  .hours div{display:flex;justify-content:space-between;max-width:280px;padding:6px 0;border-bottom:1px dashed var(--line);}
+  .about-photo{border-radius:6px;overflow:hidden;aspect-ratio:4/5;}
+  .about-photo img{width:100%;height:100%;object-fit:cover;}
+  @media (max-width:820px){.about-grid{grid-template-columns:1fr;gap:36px;}}
+
+  /* ---------- menu ---------- */
+  .menu-cats{display:flex;gap:10px;margin-bottom:36px;flex-wrap:wrap;}
+  .cat-chip{
+    border:1px solid var(--line);background:transparent;color:var(--cream-dim);
+    padding:8px 18px;border-radius:100px;font-size:13.5px;font-weight:500;
+  }
+  .cat-chip.active{background:var(--cream);color:#1b120d;border-color:var(--cream);}
+
+  .menu-item{
+    display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:center;
+    padding:26px 0;border-bottom:1px solid var(--line);
+  }
+  .menu-item .thumb{width:120px;height:120px;border-radius:8px;overflow:hidden;flex-shrink:0;}
+  .menu-item .thumb img{width:100%;height:100%;object-fit:cover;}
+  .item-info h3{font-size:21px;font-weight:600;display:flex;align-items:center;gap:10px;}
+  .spice{color:var(--chili-bright);font-size:14px;letter-spacing:1px;}
+  .item-info p{color:var(--cream-dim);font-size:14.5px;margin-top:8px;max-width:460px;}
+  .item-tags{display:flex;gap:8px;margin-top:10px;}
+  .tag{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--olive);border:1px solid rgba(124,138,86,0.5);padding:3px 9px;border-radius:100px;}
+  .item-side{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
+  .price{font-family:'Fraunces',serif;font-size:22px;color:var(--gold);}
+  .add-btn{
+    background:transparent;border:1px solid var(--cream);color:var(--cream);
+    padding:9px 18px;border-radius:100px;font-size:13.5px;font-weight:600;white-space:nowrap;
+    transition:background .2s, color .2s;
+  }
+  .add-btn:hover{background:var(--cream);color:#1b120d;}
+  .add-btn.added{background:var(--olive);border-color:var(--olive);color:#141b0c;}
+  @media (max-width:640px){
+    .menu-item{grid-template-columns:76px 1fr;}
+    .item-side{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center;margin-top:6px;}
+    .menu-item .thumb{width:76px;height:76px;}
+  }
+
+  /* ---------- reserve ---------- */
+  .reserve{background:var(--bg-panel);}
+  .reserve-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;}
+  .reserve-photo{border-radius:6px;overflow:hidden;height:100%;min-height:420px;}
+  .reserve-photo img{width:100%;height:100%;object-fit:cover;}
+  form{display:grid;gap:18px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  label{font-size:13px;color:var(--cream-dim);display:block;margin-bottom:7px;}
+  input, select, textarea{
+    width:100%;background:var(--bg-panel-2);border:1px solid var(--line);
+    color:var(--cream);padding:13px 14px;border-radius:6px;font-family:inherit;font-size:14.5px;
+  }
+  input:focus, select:focus, textarea:focus{outline:none;border-color:var(--chili-bright);}
+  textarea{resize:vertical;min-height:80px;}
+  .submit-btn{
+    background:var(--chili-bright);color:#1b0d07;border:none;padding:15px 26px;
+    border-radius:100px;font-weight:700;font-size:14.5px;justify-self:start;margin-top:6px;
+  }
+  .submit-btn:hover{background:#ff6a37;}
+  .confirm-msg{
+    display:none;margin-top:18px;padding:16px 18px;border-radius:8px;
+    background:rgba(124,138,86,0.16);border:1px solid rgba(124,138,86,0.5);
+    color:var(--cream);font-size:14.5px;
+  }
+  .confirm-msg.show{display:block;}
+  @media (max-width:820px){.reserve-grid{grid-template-columns:1fr;} .reserve-photo{min-height:260px;} .form-row{grid-template-columns:1fr;}}
+
+  /* ---------- footer ---------- */
+  footer{padding:60px 0 40px;border-top:1px solid var(--line);}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;}
+  footer h4{font-family:'Fraunces',serif;font-size:17px;margin-bottom:14px;}
+  footer p, footer a{color:var(--cream-dim);font-size:14px;text-decoration:none;line-height:1.9;}
+  .foot-bottom{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--cream-dim);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  @media (max-width:640px){.footer-grid{grid-template-columns:1fr;gap:28px;}}
+
+  /* ---------- cart drawer ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(10,7,5,0.55);z-index:60;
+    opacity:0;pointer-events:none;transition:opacity .25s;
+  }
+  .overlay.open{opacity:1;pointer-events:auto;}
+  .drawer{
+    position:fixed;top:0;right:0;bottom:0;width:min(420px, 92vw);
+    background:var(--bg-panel);z-index:70;
+    transform:translateX(100%);transition:transform .3s ease;
+    display:flex;flex-direction:column;border-left:1px solid var(--line);
+  }
+  .drawer.open{transform:translateX(0);}
+  .drawer-head{padding:24px 24px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+  .drawer-head h3{font-size:22px;}
+  .drawer-close{background:none;border:none;color:var(--cream);font-size:22px;line-height:1;}
+  .drawer-items{flex:1;overflow-y:auto;padding:18px 24px;}
+  .drawer-empty{color:var(--cream-dim);font-size:14.5px;text-align:center;padding:60px 10px;}
+  .cart-row{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center;}
+  .cart-row img{width:60px;height:60px;border-radius:6px;object-fit:cover;flex-shrink:0;}
+  .cart-row .ci-info{flex:1;}
+  .cart-row .ci-info h5{font-size:15px;font-weight:600;font-family:'Fraunces',serif;}
+  .cart-row .ci-info .ci-price{color:var(--gold);font-size:13.5px;margin-top:4px;}
+  .qty-ctrl{display:flex;align-items:center;gap:10px;margin-top:8px;}
+  .qty-ctrl button{
+    width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--cream);
+    display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .qty-ctrl span{font-size:14px;min-width:16px;text-align:center;}
+  .remove-btn{background:none;border:none;color:var(--cream-dim);font-size:12.5px;text-decoration:underline;margin-top:8px;}
+  .drawer-foot{padding:22px 24px 26px;border-top:1px solid var(--line);}
+  .total-row{display:flex;justify-content:space-between;font-size:16px;margin-bottom:16px;}
+  .total-row strong{font-family:'Fraunces',serif;font-size:20px;color:var(--gold);}
+  .checkout-btn{
+    width:100%;background:var(--chili-bright);color:#1b0d07;border:none;padding:15px;
+    border-radius:100px;font-weight:700;font-size:15px;
+  }
+  .checkout-btn:disabled{background:rgba(243,233,218,0.15);color:var(--cream-dim);}
+  .order-confirm{display:none;text-align:center;padding:30px 10px;}
+  .order-confirm.show{display:block;}
+  .order-confirm .big{font-size:38px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <div class="mark">SH</div>
+      <div class="brand-name">Spicy <span>Hotel</span></div>
+    </div>
+    <nav class="links">
+      <a href="#menu">Menu</a>
+      <a href="#reserve">Reserve</a>
+      <a href="#about">Our Story</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <div class="nav-right">
+      <button class="cart-btn" onclick="openCart()">
+        Order <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="#menu">Menu</a>
+    <a href="#reserve">Reserve</a>
+    <a href="#about">Our Story</a>
+    <a href="#visit">Visit</a>
+  </div>
+</header>
+
+<section class="hero">
+  <img src="https://images.unsplash.com/photo-1741963201583-390e6aeb0166?auto=format&fit=crop&w=1800&q=80" alt="Fresh red chilies">
+  <div class="hero-content">
+    <div class="eyebrow-plain">Indian Kitchen &amp; Grill</div>
+    <h1>Spicy Hotel</h1>
+    <p class="lede">Slow-simmered curries, tandoor-fired classics and a chili on every plate. Book a table or get tonight's dinner sent straight to your door.</p>
+    <div class="hero-ctas">
+      <a href="#reserve" class="btn btn-primary">Reserve a table</a>
+      <a href="#menu" class="btn btn-ghost">Order online</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <h2>A family kitchen, turned up to the heat you actually asked for.</h2>
+      <p>Spicy Hotel started as a single tandoor and a family recipe book. Every curry is still built the same way: whole spices toasted to order, never a jar of pre-mix in sight. Tell us your heat level — we'll take you there.</p>
+      <div class="hours">
+        <div><span>Mon – Thu</span><span>12:00 – 22:00</span></div>
+        <div><span>Fri – Sat</span><span>12:00 – 23:30</span></div>
+        <div><span>Sunday</span><span>13:00 – 21:00</span></div>
+      </div>
+    </div>
+    <div class="about-photo">
+      <img src="https://images.unsplash.com/photo-1559528896-c5310744cce8?auto=format&fit=crop&w=900&q=80" alt="Chicken biryani, house specialty">
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Tonight's menu</h2>
+        <p>Add anything below to your order — pickup or delivery, your call at checkout.</p>
+      </div>
+    </div>
+
+    <div class="menu-cats">
+      <button class="cat-chip active" data-filter="all">All</button>
+      <button class="cat-chip" data-filter="mains">Mains</button>
+      <button class="cat-chip" data-filter="bread">Bread &amp; Rice</button>
+      <button class="cat-chip" data-filter="sweet">Dessert</button>
+    </div>
+
+    <div id="menuList">
+      <!-- items injected by JS -->
+    </div>
+  </div>
+</section>
+
+<section class="reserve" id="reserve">
+  <div class="wrap reserve-grid">
+    <div class="reserve-photo">
+      <img src="https://images.unsplash.com/photo-1742599361574-6fb156181466?auto=format&fit=crop&w=900&q=80" alt="Chicken tikka masala">
+    </div>
+    <div>
+      <div class="section-head" style="border:none;padding:0;margin-bottom:32px;">
+        <div>
+          <h2>Reserve a table</h2>
+          <p>Walk-ins welcome, but we'll always hold your spot if you book ahead.</p>
+        </div>
+      </div>
+      <form id="reserveForm">
+        <div class="form-row">
+          <div>
+            <label for="rName">Full name</label>
+            <input type="text" id="rName" required placeholder="Your name">
+          </div>
+          <div>
+            <label for="rPhone">Phone number</label>
+            <input type="tel" id="rPhone" required placeholder="(555) 000-0000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="rDate">Date</label>
+            <input type="date" id="rDate" required>
+          </div>
+          <div>
+            <label for="rTime">Time</label>
+            <input type="time" id="rTime" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="rGuests">Guests</label>
+            <select id="rGuests">
+              <option>1</option><option>2</option><option selected>3</option><option>4</option>
+              <option>5</option><option>6</option><option>7+</option>
+            </select>
+          </div>
+          <div>
+            <label for="rSpice">Preferred spice level</label>
+            <select id="rSpice">
+              <option>Mild</option><option selected>Medium</option><option>Hot</option><option>Extra Hot</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="rNotes">Special requests (optional)</label>
+          <textarea id="rNotes" placeholder="Allergies, seating preference, celebrations…"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Confirm reservation</button>
+      </form>
+      <div class="confirm-msg" id="reserveConfirm"></div>
+    </div>
+  </div>
+</section>
+
+<footer id="visit">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>Spicy Hotel</h4>
+        <p>214 Curry Lane<br>Patancheru, Telangana</p>
+        <p style="margin-top:10px;">+91 7993139320<br>msyunish@gmail.com</p>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <p>Mon – Thu · 12:00 – 22:00</p>
+        <p>Fri – Sat · 12:00 – 23:30</p>
+        <p>Sunday · 13:00 – 21:00</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <p><a href="#menu">Full menu</a></p>
+        <p><a href="#reserve">Book a table</a></p>
+        <p><a href="#about">Our story</a></p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Spicy Hotel. All heat, no compromise.</span>
+      <span>Built with care, served with chili.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- cart drawer -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>Your order</h3>
+    <button class="drawer-close" onclick="closeCart()">&times;</button>
+  </div>
+  <div class="drawer-items" id="drawerItems">
+    <div class="drawer-empty">Your cart is empty. Add a dish from the menu to get started.</div>
+  </div>
+  <div class="order-confirm" id="orderConfirm">
+    <div class="big">🌶️</div>
+    <h3 style="margin-top:14px;">Order placed!</h3>
+    <p style="color:var(--cream-dim);margin-top:8px;font-size:14.5px;">We're firing up the tandoor. You'll get a confirmation call shortly.</p>
+    <button class="submit-btn" style="margin-top:22px;" onclick="closeCart()">Done</button>
+  </div>
+  <div class="drawer-foot" id="drawerFoot">
+    <div class="total-row"><span>Total</span><strong id="cartTotal">$0.00</strong></div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="placeOrder()" disabled>Place order</button>
+  </div>
+</div>
+
+<script>
+  const MENU = [
+    {
+      id:'butter-chicken',
+      name:'Butter Chicken',
+      desc:'Tandoor-roasted chicken simmered in a velvety tomato-butter gravy, finished with cream.',
+      price:14.5,
+      spice:2,
+      cat:'mains',
+      tags:['Bestseller','Gluten-free'],
+      img:'https://images.unsplash.com/photo-1742599361498-79824d24e355?auto=format&fit=crop&w=400&q=80'
+    },
+    {
+      id:'chicken-biryani',
+      name:'Chicken Biryani',
+      desc:'Basmati rice layered and slow-cooked with marinated chicken, fried onions and whole spices.',
+      price:15.0,
+      spice:2,
+      cat:'mains',
+      tags:['House special'],
+      img:'https://images.unsplash.com/photo-1559528896-c5310744cce8?auto=format&fit=crop&w=400&q=80'
+    },
+    {
+      id:'tikka-masala',
+      name:'Chicken Tikka Masala',
+      desc:'Chargrilled chicken tikka folded into a smoky, spiced tomato-cream sauce.',
+      price:14.0,
+      spice:3,
+      cat:'mains',
+      tags:['Spicy'],
+      img:'https://images.unsplash.com/photo-1742599361574-6fb156181466?auto=format&fit=crop&w=400&q=80'
+    },
+    {
+      id:'garlic-naan',
+      name:'Garlic Naan',
+      desc:'Pillowy tandoor-baked flatbread, brushed with garlic butter and fresh coriander.',
+      price:4.5,
+      spice:0,
+      cat:'bread',
+      tags:['Vegetarian'],
+      img:'igm/roti.png'
+    },
+    {
+      id:'gulab-jamun',
+      name:'Gulab Jamun',
+      desc:'Warm milk-solid dumplings soaked in rose and cardamom syrup. Two pieces per order.',
+      price:5.5,
+      spice:0,
+      cat:'sweet',
+      tags:['Vegetarian','Sweet'],
+      img:'https://images.pexels.com/photos/15014919/pexels-photo-15014919.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop'
+    },
+    {
+      id:'2 peice Mandi',
+      name:'2 Piece Mandi',
+      desc:'Aromatic rice dish with tender meat, infused with a blend of spices and slow-cooked to perfection.',
+      price:16,
+      spice:2,
+      cat:'mains',
+      tags:['Non Vegetarian','House special'],
+      img:"igm/mandi.png"
+    },
+    {
+      id:'Ragi Mudda',
+      name:'Ragi Mudda',
+      desc:'A traditional South Indian dish made from finger millet flour, served with a spicy curry or chutney.',
+      price:16,
+      spice:2,
+      cat:'mains',
+      tags:['Non Vegetarian','House special'],
+      img:"igm/Ragi Mudda.png"
+    }
+  ];
+
+  let cart = {}; // id -> qty
+
+  function spiceLabel(n){
+    return n === 0 ? '' : ' · ' + '🌶️'.repeat(n);
+  }
+
+  function renderMenu(filter='all'){
+    const list = document.getElementById('menuList');
+    list.innerHTML = '';
+    MENU.filter(i => filter==='all' || i.cat===filter).forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'menu-item';
+      row.innerHTML = `
+        <div class="thumb"><img src="${item.img}" alt="${item.name}"></div>
+        <div class="item-info">
+          <h3>${item.name}<span class="spice">${spiceLabel(item.spice)}</span></h3>
+          <p>${item.desc}</p>
+          <div class="item-tags">${item.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        </div>
+        <div class="item-side">
+          <div class="price">$${item.price.toFixed(2)}</div>
+          <button class="add-btn" data-id="${item.id}">Add to order</button>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+    list.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', () => addToCart(btn.dataset.id, btn));
+    });
+  }
+
+  function addToCart(id, btnEl){
+    cart[id] = (cart[id] || 0) + 1;
+    updateCartUI();
+    if(btnEl){
+      btnEl.textContent = 'Added ✓';
+      btnEl.classList.add('added');
+      setTimeout(()=>{ btnEl.textContent='Add to order'; btnEl.classList.remove('added'); }, 1200);
+    }
+  }
+
+  function changeQty(id, delta){
+    cart[id] = (cart[id] || 0) + delta;
+    if(cart[id] <= 0) delete cart[id];
+    updateCartUI();
+  }
+
+  function removeItem(id){
+    delete cart[id];
+    updateCartUI();
+  }
+
+  function updateCartUI(){
+    const count = Object.values(cart).reduce((a,b)=>a+b,0);
+    document.getElementById('cartCount').textContent = count;
+
+    const drawerItems = document.getElementById('drawerItems');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    let total = 0;
+
+    if(count === 0){
+      drawerItems.innerHTML = '<div class="drawer-empty">Your cart is empty. Add a dish from the menu to get started.</div>';
+      checkoutBtn.disabled = true;
+    } else {
+      drawerItems.innerHTML = '';
+      Object.entries(cart).forEach(([id, qty]) => {
+        const item = MENU.find(m => m.id === id);
+        const lineTotal = item.price * qty;
+        total += lineTotal;
+        const row = document.createElement('div');
+        row.className = 'cart-row';
+        row.innerHTML = `
+          <img src="${item.img}" alt="${item.name}">
+          <div class="ci-info">
+            <h5>${item.name}</h5>
+            <div class="ci-price">$${lineTotal.toFixed(2)}</div>
+            <div class="qty-ctrl">
+              <button onclick="changeQty('${id}', -1)">−</button>
+              <span>${qty}</span>
+              <button onclick="changeQty('${id}', 1)">+</button>
+            </div>
+          </div>
+          <button class="remove-btn" onclick="removeItem('${id}')">Remove</button>
+        `;
+        drawerItems.appendChild(row);
+      });
+      checkoutBtn.disabled = false;
+    }
+    document.getElementById('cartTotal').textContent = '$' + total.toFixed(2);
+  }
+
+  function openCart(){
+    document.getElementById('overlay').classList.add('open');
+    document.getElementById('drawer').classList.add('open');
+  }
+  function closeCart(){
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('orderConfirm').classList.remove('show');
+    document.getElementById('drawerItems').style.display = 'block';
+    document.getElementById('drawerFoot').style.display = 'block';
+  }
+  function placeOrder(){
+    document.getElementById('drawerItems').style.display = 'none';
+    document.getElementById('drawerFoot').style.display = 'none';
+    document.getElementById('orderConfirm').classList.add('show');
+    cart = {};
+    updateCartUI();
+  }
+
+  document.querySelectorAll('.cat-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      renderMenu(chip.dataset.filter);
+    });
+  });
+
+  document.getElementById('reserveForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('rName').value;
+    const date = document.getElementById('rDate').value;
+    const time = document.getElementById('rTime').value;
+    const guests = document.getElementById('rGuests').value;
+    const msg = document.getElementById('reserveConfirm');
+    msg.textContent = `Thanks, ${name} — your table for ${guests} on ${date} at ${time} is booked. We'll call to confirm.`;
+    msg.classList.add('show');
+    this.reset();
+  });
+
+  const menuToggle = document.getElementById('menuToggle');
+  const mobilePanel = document.getElementById('mobilePanel');
+  menuToggle.addEventListener('click', () => {
+    const isOpen = mobilePanel.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
+    menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  mobilePanel.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobilePanel.classList.remove('open');
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  renderMenu();
+  updateCartUI();
+</script>
+
+</body>
+</html>
+<img width="270" height="271" alt="roti" src="https://github.com/user-attachments/assets/78cd1ae9-716f-4acc-adf8-1fcd9a9ca294" />
+<img width="272" height="270" alt="ragi mudda" src="https://github.com/user-attachments/assets/43e7360e-9f95-40cc-910b-ff4cf286ca26" />
+<img width="233" height="272" alt="mandi" src="https://github.com/user-attachments/assets/46d1721a-ebee-4a23-aa8c-1b873915521e" />
+
+
